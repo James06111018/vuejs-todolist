@@ -11,6 +11,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <style>
+        .modal-header,
+        h4,
+        .close {
+            background-color: #5cb85c;
+            color: white;
+            text-align: center;
+            font-size: 2em;
+        }
+
+        .modal-footer {
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 
 <body>
@@ -127,7 +141,13 @@
                     todoModalApp.todoIndex = -1;
                     $("#todoModal").modal( { backdrop: "static" } );
                 },
-                
+                editItemClick: function(index) {
+
+                    $("#todoModal").modal( { backdrop: "static" } );
+                },
+                deleteItemClick: function(index) {
+
+                }
             }
         });
 
@@ -141,7 +161,21 @@
             },
             methods: {
                 okButtonClick: function() {
-
+                    if(this.todoIndex < 0) { //new todo
+                        var todoItem = {
+                            content: this.content,
+                            status: this.status,
+                            datetime: this.datetime
+                        };
+                        $.ajax({
+                            type: "post",
+                            url: "/home/todo",
+                            data: todoItem
+                        }).then( function(e) {
+                            downloadTodoList();
+                        })
+                        
+                    }
                     $("#todoModal").modal("hide");
                 }
             }
