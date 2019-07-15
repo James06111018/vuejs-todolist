@@ -142,7 +142,10 @@
                     $("#todoModal").modal( { backdrop: "static" } );
                 },
                 editItemClick: function(index) {
-
+                    todoModalApp.content = this.todoList[index].content;
+                    todoModalApp.status = this.todoList[index].status;
+                    todoModalApp.datetime = this.todoList[index].datetime;
+                    todoModalApp.todoIndex = index;
                     $("#todoModal").modal( { backdrop: "static" } );
                 },
                 deleteItemClick: function(index) {
@@ -174,7 +177,18 @@
                         }).then( function(e) {
                             downloadTodoList();
                         })
+                    } else {
+                        todoApp.todoList[this.todoIndex].content =  this.content;
+                        todoApp.todoList[this.todoIndex].status = this.status;
+                        todoApp.todoList[this.todoIndex].datetime = this.datetime;
                         
+                        $.ajax({
+                            type: "put",
+                            url: "/home/todo",
+                            data: todoApp.todoList[this.todoIndex]
+                        }).then( function(e) {
+                            downloadTodoList();
+                        })
                     }
                     $("#todoModal").modal("hide");
                 }
