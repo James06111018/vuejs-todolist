@@ -149,7 +149,13 @@
                     $("#todoModal").modal( { backdrop: "static" } );
                 },
                 deleteItemClick: function(index) {
-
+                    $.ajax({
+                        type: "delete",
+                        url: "/home/todo",
+                        data: this.todoList[index]
+                    }).then(function(e){
+                        downloadTodoList();
+                    })
                 }
             }
         });
