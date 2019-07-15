@@ -53,7 +53,7 @@
 
     <!-- 對話盒 -->
     <!-- // mark: dialog ui -->
-    <div id="newsModal" class="modal fade" role="dialog">
+    <div id="todoModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -121,25 +121,28 @@
             },
             methods: {
                 newItemClick: function() {
-                    newsModalApp.content = "";
-                    newsModalApp.status = "todo";
-                    newsModalApp.datetime = "";
-                    $("#newsModal").modal( { backdrop: "static" } );
-                }
+                    todoModalApp.content = "";
+                    todoModalApp.status = "todo";
+                    todoModalApp.datetime = "";
+                    todoModalApp.todoIndex = -1;
+                    $("#todoModal").modal( { backdrop: "static" } );
+                },
+                
             }
         });
 
-        var newsModalApp = new Vue({
-            el: "#newsModal",
+        var todoModalApp = new Vue({
+            el: "#todoModal",
             data: {
                 content: "",
                 status: "",
-                datetime: ""
+                datetime: "",
+                todoIndex: 0
             },
             methods: {
                 okButtonClick: function() {
 
-                    $("#newsModal").modal("hide");
+                    $("#todoModal").modal("hide");
                 }
             }
         })
